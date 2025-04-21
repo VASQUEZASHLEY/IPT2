@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Expense Tracker Dashboard</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+                background-color: #f4f4f4;
+            }
+            .container {
+                max-width: 800px;
+                margin: 50px auto;
+                background: #fff;
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            }
+            h1 {
+                text-align: center;
+                margin-bottom: 20px;
+            }
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-bottom: 20px;
+            }
+            table th, table td {
+                border: 1px solid #ddd;
+                padding: 10px;
+                text-align: left;
+            }
+            table th {
+                background-color: #007bff;
+                color: white;
+            }
+            .add-expense {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 20px;
+            }
+            .add-expense input, .add-expense button {
+                padding: 10px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+            }
+            .add-expense button {
+                background-color: #28a745;
+                color: white;
+                border: none;
+                cursor: pointer;
+            }
+            .add-expense button:hover {
+                background-color: #218838;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Expense Tracker Dashboard</h1>
+            <div class="add-expense">
+                <input type="text" id="expense-name" placeholder="Expense Name" />
+                <input type="number" id="expense-amount" placeholder="Amount" />
+                <button onclick="addExpense()">Add Expense</button>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Expense Name</th>
+                        <th>Amount</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="expense-table">
+                    <!-- Dynamic rows will be added here -->
+                </tbody>
+            </table>
+        </div>
+        <script>
+            function addExpense() {
+                const name = document.getElementById('expense-name').value;
+                const amount = document.getElementById('expense-amount').value;
+
+                if (name && amount) {
+                    const table = document.getElementById('expense-table');
+                    const row = document.createElement('tr');
+
+                    row.innerHTML = `
+                        <td>${name}</td>
+                        <td>$${parseFloat(amount).toFixed(2)}</td>
+                        <td><button onclick="deleteExpense(this)">Delete</button></td>
+                    `;
+
+                    table.appendChild(row);
+
+                    // Clear input fields
+                    document.getElementById('expense-name').value = '';
+                    document.getElementById('expense-amount').value = '';
+                } else {
+                    alert('Please enter both name and amount.');
+                }
+            }
+
+            function deleteExpense(button) {
+                const row = button.parentElement.parentElement;
+                row.remove();
+            }
+        </script>
+    </body>
+</html>
